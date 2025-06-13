@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# If we are already called legacy, then pre-commit is already installed
+if [[ $0 != *legacy ]]; then
+    if [ -f .pre-commit-config.yaml ]; then
+        echo 'pre-commit configuration detected, but pre-commit install was never run' 1>&2
+        echo "please run 'pre-commit install' to install pre-commit hooks" 1>&2
+        echo "or delete||edit .git/hooks/pre-commit to disable this test" 1>&2
+        exit 1
+    fi
+fi
+# We want to include in commits any .gitignore ot .gitattribute file that is not yet committed
+files=$(git ls-files --others --exclude-standard --modified | grep -E "(.*/)?\.gitattributes|(.*/)?\.gitignore")
+if [[ -n "$files" ]]; then
+  echo "Detected modified or untracked .gitattributes or .gitignore file(s). Staging them now..." 1>&2
+  git add -v $files
+fi

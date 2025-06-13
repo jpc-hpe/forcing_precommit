@@ -18,7 +18,7 @@ So I came up with this second-best solution:
 
 First we create the folder for the  custom hook: `mkdir -p $HOME/.git-template/hooks`
  
-In that folder we create the `pre-commit`file with the following content:
+In that folder we create the `pre-commit`file with the following content (you can copy from below or [get the file](pre-commit) from this repo:
 
 ```bash
 #!/usr/bin/env bash
